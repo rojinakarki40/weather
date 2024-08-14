@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/rainy-background.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Prediction Form</h1>
+        <form action="/predict/" method="post">
+            {% csrf_token %}
+            <label for="algo">Choose an algorithm:</label>
+            <select name="algo" id="algo">
+                <option value="mlr">Multiple Linear Regression</option>
+                <option value="dtr">Decision Tree Regression</option>
+                <option value="rfr">Random Forest Regression</option>
+                <option value="gnb">Gaussian Naive Bayes</option>
+            </select>
+            
+            <label for="n1">Max Temp (🌞 ):</label>
+            <input type="number" id="n1" name="n1" placeholder="15-51" min="15" max="51" required>
+            
+            <label for="n2">Min Temp (🌡️):</label>
+            <input type="number" id="n2" name="n2" placeholder="3-39" min="3" max="39" required>
+            
+            <label for="n3">Cloud Cover (☁️):</label>
+            <input type="number" id="n3" name="n3" placeholder="0-100" min="0" max="100" required>
+            
+            <label for="n4">Humidity (💧):</label>
+            <input type="number" id="n4" name="n4" placeholder="2-100" min="2" max="100" required>
+            
+            <label for="n5">Sun Hour:🌅</label>
+            <input type="number" id="n5" name="n5" placeholder="4-14" min="4" max="14" required>
+            
+            <label for="n6">Precipitation (🌧️):</label>
+            <input type="number" id="n6" name="n6" placeholder="0-21" min="0" max="21" required>
+            
+            <label for="n7">Pressure 🌫️(hPa):</label>
+            <input type="number" id="n7" name="n7" placeholder="986-1024" min="986" max="1024" required>
+            
+            <label for="n8">Windspeed 🌬️(km/h):</label>
+            <input type="number" id="n8" name="n8" placeholder="0-47" min="0" max="47" required>
+            
+            <input type="submit" value="Predict">
+        </form>
+        <div class="result">
+            <p>Result: <b>{{ result }}</b></p>
+        </div>
+    </div>
+</body>
+</html>
